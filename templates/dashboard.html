@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dashboard</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <h2>🚀</h2>
+    <a href="#">Dashboard</a>
+    <a href="#">Profile</a>
+    <a href="/logout">Logout</a>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+<h1>Dashboard</h1>
+
+<!-- UPLOAD -->
+<div class="card">
+<form method="POST" enctype="multipart/form-data">
+<input type="file" name="resume">
+<textarea name="job_desc" placeholder="Paste job description..."></textarea>
+<button>Analyze Resume</button>
+</form>
+</div>
+
+{% if result %}
+
+<!-- SCORE -->
+<div class="grid">
+<div class="card center">
+<h2>{{ result.score }}%</h2>
+<canvas id="chart"></canvas>
+</div>
+
+<!-- KEYWORDS -->
+<div class="card">
+<h3>Missing Keywords</h3>
+<div class="tags">
+{% for k in result.keywords %}
+<span>{{ k }}</span>
+{% endfor %}
+</div>
+</div>
+</div>
+
+<!-- AI -->
+<div class="card">
+<h3>AI Suggestions</h3>
+<pre>{{ ai_text }}</pre>
+</div>
+
+{% endif %}
+
+<!-- CHAT -->
+<div class="card">
+<h3>Chatbot</h3>
+<input id="msg">
+<button onclick="send()">Ask</button>
+<p id="reply"></p>
+</div>
+
+</div>
+</div>
+
+<script>
+function send(){
+fetch("/chat",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({message:document.getElementById("msg").value})
+})
+.then(res=>res.json())
+.then(data=>{
+document.getElementById("reply").innerText=data.reply
+})
+}
+</script>
+
+{% if result %}
+<script>
+new Chart(document.getElementById('chart'),{
+type:'doughnut',
+data:{
+labels:['Match','Missing'],
+datasets:[{
+data:[{{ result.score }},{{100-result.score}}],
+backgroundColor:['#6a11cb','#ddd']
+}]
+}
+})
+</script>
+{% endif %}
+
+</body>
+</html>

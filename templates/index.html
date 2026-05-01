@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resume Analyzer Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="layout">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>📊</h2>
+        <ul>
+            <li>Hard Skills</li>
+            <li>Soft Skills</li>
+            <li>Keywords</li>
+        </ul>
+    </div>
+
+    <!-- Main -->
+    <div class="main">
+
+        <h1>Resume Analyzer Dashboard</h1>
+
+        <!-- Upload -->
+        <div class="card">
+            <form method="POST" enctype="multipart/form-data">
+                <input type="file" name="resume" required>
+                <textarea name="job_desc" placeholder="Paste job description..." required></textarea>
+                <button type="submit">Analyze</button>
+            </form>
+        </div>
+
+        {% if score is not none %}
+        <div class="grid">
+
+            <!-- Score -->
+            <div class="card center">
+                <h3>Overall Score</h3>
+                <div class="circle">{{ score }}%</div>
+                <p>Target: 85+</p>
+            </div>
+
+            <!-- Keywords -->
+            <div class="card">
+                <h3>Missing Keywords</h3>
+                <div class="tags">
+                    {% for k in keywords %}
+                    <span>{{ k }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Highlight Panel -->
+        <div class="card">
+            <h3>Job Description Analysis</h3>
+            <div class="jd-box">
+                {{ highlighted|safe }}
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+</html>

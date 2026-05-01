@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login</title>
+<style>
+body {
+    margin:0;
+    font-family:'Segoe UI';
+    background: linear-gradient(135deg,#4facfe,#6a11cb);
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.card {
+    background:white;
+    padding:40px;
+    border-radius:20px;
+    width:320px;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+
+h2 {
+    color:#4a148c;
+}
+
+input {
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border-radius:20px;
+    border:none;
+    background:#f1f1f1;
+}
+
+button {
+    width:100%;
+    padding:12px;
+    background:#4a148c;
+    color:white;
+    border:none;
+    border-radius:20px;
+    cursor:pointer;
+}
+
+button:hover {
+    background:#6a11cb;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h2>Welcome Back</h2>
+    <form method="POST">
+        <input name="username" placeholder="Username">
+        <input name="password" type="password" placeholder="Password">
+        <button>Login</button>
+    </form>
+</div>
+
+</body>
+</html>
